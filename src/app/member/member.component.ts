@@ -9,7 +9,10 @@ import { MEMBER } from 'src/app/type/member.model';
 export class MemberComponent implements OnInit {
   constructor(public datePipe: DatePipe) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showClock();
+  }
+  formattedDate: string = '';
   member: MEMBER[] = [
     {
       name: 'John',
@@ -18,6 +21,7 @@ export class MemberComponent implements OnInit {
       status: { status: '退社', bgColor: 'red' },
       isBreak: false,
       breakStartTime: '',
+      leftBreakTime: 60,
     },
     {
       name: 'Mary',
@@ -26,6 +30,7 @@ export class MemberComponent implements OnInit {
       status: { status: '退社', bgColor: 'red' },
       isBreak: false,
       breakStartTime: '',
+      leftBreakTime: 60,
     },
     {
       name: 'Mike',
@@ -34,6 +39,7 @@ export class MemberComponent implements OnInit {
       status: { status: '退社', bgColor: 'red' },
       isBreak: false,
       breakStartTime: '',
+      leftBreakTime: 60,
     },
     {
       name: 'Jane',
@@ -42,6 +48,7 @@ export class MemberComponent implements OnInit {
       status: { status: '退社', bgColor: 'red' },
       isBreak: false,
       breakStartTime: '',
+      leftBreakTime: 60,
     },
     {
       name: 'Tom',
@@ -50,15 +57,44 @@ export class MemberComponent implements OnInit {
       status: { status: '退社', bgColor: 'red' },
       isBreak: false,
       breakStartTime: '',
+      leftBreakTime: 60,
     },
   ];
 
-  formattedDate = this.datePipe.transform(new Date(), 'HH:mm:ss', '+0900');
+  startBreak(member: MEMBER): void {
+    member.isBreak = true;
+    member.breakStartTime = this.datePipe.transform(
+      new Date(),
+      'yyyy-MM-dd HH:mm:ss'
+    )!;
+  }
 
-  toggleIsBreak(member: MEMBER, $event: any): void {
+  endBreak(member: MEMBER): void {
+    member.isBreak = false;
+    member.breakStartTime = '';
+  }
+
+  showClock(): void {
+    setInterval(() => {
+      let formattedDate = this.datePipe.transform(
+        new Date(),
+        'HH:mm:ss',
+        '+0900'
+      );
+      this.formattedDate = formattedDate!;
+    }, 1000);
+  }
+
+  toggleIsBreak(member: MEMBER, $event: Event): void {
     member.isBreak = !member.isBreak;
+    const timerId = setInterval(() => {
+      member.leftBreakTime--;
+      if (member.isBreak === false) {
+        clearInterval(timerId);
+      }
+    }, 6000);
+
     $event.stopPropagation();
-    //$event.preventDefault();
   }
 
   toggleStatus(member: MEMBER): void {

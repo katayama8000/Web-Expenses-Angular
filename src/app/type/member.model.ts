@@ -8,4 +8,5 @@ export type MEMBER = {
   };
   isBreak: boolean;
   breakStartTime: string;
+  leftBreakTime: number;
 };
