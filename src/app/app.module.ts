@@ -12,10 +12,12 @@ import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { MemberComponent } from './member/member.component';
+import { LibraryComponent } from './library/library.component';
+import { PagecontainerComponent } from './pagecontainer/pagecontainer.component';
 
 
 @NgModule({
-  declarations: [AppComponent, SampleComponent, BgCloudComponent, SigninComponent, HomeComponent, AdminComponent, MemberComponent],
+  declarations: [AppComponent, SampleComponent, BgCloudComponent, SigninComponent, HomeComponent, AdminComponent, MemberComponent, LibraryComponent, PagecontainerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
